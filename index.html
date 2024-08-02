@@ -14,7 +14,32 @@
    }
 </style>
 </head>
+<style>
+   .loader {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     background-color: #fff; /* or any other background color */
+     z-index: 9999; /* Make sure it overlays everything */
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+   .loader.hidden {
+     display: none;
+   }
+ </style>
 
+ 
+   <div class="loader">
+     <div class="loader-inner">
+       <!-- Your SVG spinner goes here -->
+     </div>
+   </div>
+   <!-- Rest of your page content goes here -->
+ 
 <body>
    <meta name="description" content="我们的相遇是一个美丽的意外，遇到了这么好的你">
    <title>我们俩</title>
@@ -41,7 +66,7 @@
    <div class="wrapper">
       <section class="hero overlay">
          <div class="background-img">
-            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt=""class="lazyload">
          </div>
          <header class="header default">
             <div class=" left-part">
@@ -204,12 +229,11 @@
             <div class="row mb-30">
                <h2 class="indent">Photo album</h2>
                
-
                <div class="col-md-4 col-sm-4 col-xs-12 ">
                   <div class="block-img">
                      <a href="http://love.145v1.com/page/biaobai_aidegushi/img/1.jpg" class="venobox" target="_blank">
                         <div class="background-img">
-                           <img alt="" src="img/2.jpg">
+                           <img alt="" src="img/2.jpg" class="lazyload">
                         </div>
                      </a>
                   </div>
@@ -218,7 +242,7 @@
                   <div class="block-img">
                      <a href="http://love.145v1.com/page/biaobai_aidegushi/img/2.jpg" class="venobox" target="_blank">
                         <div class="background-img">
-                           <img alt="" src="img/3.jpg">
+                           <img alt="" src="img/3.jpg"class="lazyload">
                         </div>
                      </a>
                   </div>
@@ -227,7 +251,7 @@
                   <div class="block-img">
                      <a href="http://love.145v1.com/page/biaobai_aidegushi/img/3.jpg" class="venobox" target="_blank">
                         <div class="background-img">
-                           <img alt="" src="img/4.jpg">
+                           <img alt="" src="img/4.jpg"class="lazyload">
                         </div>
                      </a>
                   </div>
@@ -236,7 +260,7 @@
                   <div class="block-img">
                      <a href="http://love.145v1.com/page/biaobai_aidegushi/img/44.jpg" class="venobox" target="_blank">
                         <div class="background-img">
-                           <img alt="" src="img/5.jpg">
+                           <img alt="" src="img/5.jpg"class="lazyload">
                         </div>
                      </a>
                   </div>
@@ -245,7 +269,7 @@
                   <div class="block-img">
                      <a href="http://love.145v1.com/page/biaobai_aidegushi/img/55.jpg" class="venobox" target="_blank">
                         <div class="background-img">
-                           <img alt="" src="img/6.jpg">
+                           <img alt="" src="img/6.jpg"class="lazyload">
                         </div>
                      </a>
                   </div>
@@ -254,7 +278,7 @@
                   <div class="block-img">
                      <a href="http://love.145v1.com/page/biaobai_aidegushi/img/66.jpg" class="venobox" target="_blank">
                         <div class="background-img">
-                           <img alt="" src="img/7.jpg">
+                           <img alt="" src="img/7.jpg"class="lazyload">
                         </div>
                      </a>
                   </div>
@@ -264,7 +288,7 @@
       </section>
       <section class="just-married pt-200 pb-200 overlay">
          <div class="background-img">
-            <img src="img/17.jpeg" alt="">
+            <img src="img/17.jpeg" alt=""class="lazyload">
          </div>
          <div class="container">
             <div class="row">
@@ -288,6 +312,34 @@
          </div>
       </footer>
    </div>
+   <script>
+      // 图片要设置高度
+      const imgs = [...document.querySelectorAll(".lazyload")];
+
+      lazyload();
+
+      window.addEventListener("scroll", lazyload, false);
+
+      function lazyload() {
+        for (let i = 0; i < imgs.length; i++) {
+          const $img = imgs[i];
+
+          if (isInVisibleArea($img)) {
+            $img.src = $img.dataset.src;
+            imgs.splice(i, 1);
+            i--;
+          }
+        }
+      }
+
+      // DOM 元素是否在可视区域内
+      function isInVisibleArea($el) {
+        const rect = $el.getBoundingClientRect();
+        // console.log(rect);
+
+        return rect.bottom > 0 && rect.top < window.innerHeight && rect.right > 0 && rect.left < window.innerWidth;
+      }
+    </script>
    <audio id="musicPlayer" src="song.mp3" preload="auto"></audio>
    <script src="js/jquery-1.12.4.min.js" type="text/javascript"></script>
    <script src="js/venobox.min.js" type="text/javascript"></script>
@@ -319,6 +371,11 @@
    </audio>
 
    <script type="text/javascript" src="js/count.js"></script>
+   <script>
+      window.addEventListener('load', function() {
+        document.querySelector('.loader').classList.add('hidden');
+      });
+    </script>
    <style>
       /* 添加样式 */
       .clickable:hover {
